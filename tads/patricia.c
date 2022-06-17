@@ -126,7 +126,7 @@ int Incrementa_Ocorrencias(No_Patricia **no, char *filename){
 }
 
 int Insere_Palavra(No_Patricia **no, char *palavra, char *filename){
-  printf ("Inserindo palavra %s\n", palavra);
+  
   
     int Posicao_Diferente;
     No_Patricia **No_Auxiliar = no;

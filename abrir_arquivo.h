@@ -1,7 +1,7 @@
 #ifndef  ABRIRA_ARQUIVO_H
 #define ABRIRA_ARQUIVO_H
 
-#include "tads\patricia.h"
+#include "tads/patricia.h"
 
 
 FILE *Ler_Arquivo(char arquivo[100]);
