@@ -1,0 +1,42 @@
+gerei aleatorio algumas vezes
+entao o jogo vai continuar
+mas o jogador vai perder
+o jogador vai perder
+o jogador vai perder
+talvez o jogador vai perder
+para com isso eu criei uma funcao
+que vai gerar um numero aleatorio
+e vai verificar se o numero gerado
+e maior que 5
+se for maior que 5
+entao o jogador vai ganhar
+se nao for maior que 5
+entao o jogador vai perder
+mas se o numero gerado for maior que 5
+e for menor que 10
+entao o jogador vai ganhar
+mas se o numero gerado for maior que 10
+e for menor que 15
+entao o jogador vai ganhar
+mas se o numero gerado for maior que 15
+e for menor que 20
+entao o jogador vai ganhar
+mas se o numero gerado for maior que 20
+e for menor que 25
+entao o jogador vai perder
+apenas se o numero gerado for maior que 25
+entao o jogador vai perder
+fim da funcao
+ZEBRA
+TESTANDO A FUNCAO
+
+
+
+
+
+
+
+
+
+
+

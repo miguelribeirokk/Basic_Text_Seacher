@@ -17,7 +17,7 @@ FILE* Ler_Arquivo(char arquivo[100]){
     }
 
 char *Transformar_Palavra(char palavra[100]){
-    int i;
+    long unsigned int i;
     for (i = 0; i < strlen(palavra); i++){
         if (palavra[i] >= 65 && palavra[i] <= 90) {
             palavra[i] += 32;
@@ -35,11 +35,11 @@ void Abrir_Arquivo(char nome[100], No_Patricia **no, int Numero_Arquivos){
     char palavra[100];
     char numero[100];
     FILE *arquivo2 = NULL;
+    int fim;
     if (Numero_Arquivos == 0){
         return;
     }
     strcat(pasta, nome);
-    int a = strlen(pasta);
     
     arquivo2 = fopen(pasta, "r");
     
@@ -49,9 +49,11 @@ void Abrir_Arquivo(char nome[100], No_Patricia **no, int Numero_Arquivos){
     }
     sprintf(numero, "%d", Numero_Arquivos);
     while(!feof(arquivo2)){
-        fscanf(arquivo2, "%s", palavra);
-        printf("%s\n", palavra);
-        char *palavra2 = Transformar_Palavra(palavra);
+        fim = fscanf(arquivo2, "%s", palavra);
+        if (fim == EOF){
+            break;
+        }
+        Transformar_Palavra(palavra);
         Insere_Palavra(no, palavra, numero);
     }
     fclose(arquivo2);

@@ -10,13 +10,15 @@
 int main(void){
 
     No_Patricia *no;
-    Lista_Encadeada *lista;
+    int fim;
     FILE *arquivo = fopen("arquivos.txt", "r");
     char nome[100];
     int Numero_Arquivos = 0;
     while(!feof(arquivo)){
-        fscanf(arquivo, "%s", nome);
-        //printf("%s", nome);
+        fim = fscanf(arquivo, "%s", nome);
+        if (fim == EOF){
+            break;
+        }
         Abrir_Arquivo(nome, &no, Numero_Arquivos);
         Numero_Arquivos++;
     }
