@@ -10,12 +10,16 @@
 int main(void){
 
     No_Patricia *no;
+    Lista_Encadeada *lista;
     int fim;
+    int a;
     FILE *arquivo = fopen("arquivos.txt", "r");
     char nome[100];
+    char *palavra = (char*)malloc(sizeof(char));
     int Numero_Arquivos = 0;
     while(!feof(arquivo)){
         fim = fscanf(arquivo, "%s", nome);
+
         if (fim == EOF){
             break;
         }
@@ -25,5 +29,20 @@ int main(void){
     fclose(arquivo);
     Printar_Palavra(&no);
     Printar_Ocorrencias(&no);
+    printf("\nPesquisar palavra: ");
+    scanf("%s", palavra);
+    lista = Buscar_Palavra(&no, palavra);
+    if (lista == NULL) printf("Palavra não encontrada!\n");
+    else{
+        printf("Palavra encontrada!\n");
+        do{
+            
+            printf("<%d-%s> ", lista->ocorrencias, lista->nome_arquivo);
+            lista = lista->prox;
+    }
+    while(lista != NULL); 
+    printf("\n");
     return 0;
+    
+}
 }
