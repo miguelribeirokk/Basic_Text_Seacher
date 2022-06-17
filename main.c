@@ -13,10 +13,20 @@ int main(void){
     Lista_Encadeada *lista;
     int fim;
     int a;
-    FILE *arquivo = fopen("arquivos.txt", "r");
-    char nome[100];
+
+    char *nome_arquivo = (char *)malloc(sizeof(char));
     char *palavra = (char*)malloc(sizeof(char));
+    char nome[100];
     int Numero_Arquivos = 0;
+    printf("Digite o nome do arquivo: ");
+    scanf("%s", nome_arquivo);
+    setbuf(stdin, NULL);
+    FILE *arquivo = fopen(nome_arquivo, "r");
+    if(arquivo == NULL){
+        printf("Arquivo nao encontrado!\n");
+        return 0;
+    }
+    
     while(!feof(arquivo)){
         fim = fscanf(arquivo, "%s", nome);
 
