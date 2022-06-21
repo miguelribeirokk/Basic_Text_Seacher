@@ -84,7 +84,7 @@ float **Fazer_Matriz(int num_arquivos, int palavras){
     return matriz;
 }
 
-void Retorna_Peso(Lista_Encadeada **lista, int Numero_Arquivos, int contador, int palavras, float **peso){
+void Retorna_Peso(Lista_Encadeada **lista, int Numero_Arquivos, int contador, float **peso){
     int ocorrencias = 0, numero_docs = 0, numero = 0;
     Lista_Encadeada *lista2 = *lista;
     for (int i = 1; i < Numero_Arquivos; i++){

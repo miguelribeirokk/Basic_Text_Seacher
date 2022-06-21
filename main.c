@@ -17,13 +17,10 @@ int main(void){
 
     No_Patricia *no;
     Lista_Encadeada *lista, *lista_aux;
-    int fim, palavras, numero_docs, contador = 0;
-    unsigned int ocorrencias;
+    int fim, palavras, contador = 0, Numero_Arquivos = 0, opcao = 0;
     char *nome_arquivo = (char *)malloc(sizeof(char));
     char *palavra = (char*)malloc(sizeof(char));
     char nome[100];
-    //float peso[100][100];
-    int Numero_Arquivos = 0, opcao = 0;
     while (opcao != 5){
         if (opcao == 0){
             printf("\n");
@@ -128,7 +125,7 @@ int main(void){
                 lista_aux = lista;
                 if (lista == NULL) printf("\tPalavra nao encontrada!\n");
                 else printf("\tPalavra encontrada!\n");
-                Retorna_Peso(&lista_aux,  Numero_Arquivos, contador, palavras, matriz);
+                Retorna_Peso(&lista_aux,  Numero_Arquivos, contador, matriz);
                 contador+=1;
              }
              printf("\nMatriz de pesos:\n");
