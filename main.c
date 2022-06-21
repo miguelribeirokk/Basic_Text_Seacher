@@ -2,24 +2,31 @@
 #include "stdlib.h"
 #include "string.h"
 
+
+
+
+
+
 #include "tads/patricia.h"
 #include "tads/lista_patricia.h"
-#include "abrir_arquivo.h"
+#include "funcoes.h"
 #include "cores/cores.h"
+
 
 int main(void){
 
     No_Patricia *no;
-    Lista_Encadeada *lista;
-    int fim;
+    Lista_Encadeada *lista, *lista_aux;
+    int fim, palavras, numero_docs, contador = 0;
+    unsigned int ocorrencias;
     char *nome_arquivo = (char *)malloc(sizeof(char));
     char *palavra = (char*)malloc(sizeof(char));
     char nome[100];
+    float peso[100][100];
     int Numero_Arquivos = 0;
     printf("Digite o nome do arquivo: ");
     scanf("%s", nome_arquivo);
-    
-    setbuf(stdin, NULL);
+    flush_in();
     FILE *arquivo = fopen(nome_arquivo, "r");
     if(arquivo == NULL){
         printf("Arquivo nao encontrado!\n");
@@ -37,20 +44,29 @@ int main(void){
     fclose(arquivo);
     Printar_Palavra(&no);
     Printar_Ocorrencias(&no);
-    printf("\nPesquisar palavra: ");
-    scanf("%s", palavra);
-    lista = Buscar_Palavra(&no, palavra);
-    if (lista == NULL) printf("Palavra não encontrada!\n");
-    else{
-        printf("Palavra encontrada!\n");
-        do{
-            
-            printf("<%d-%s> ", lista->ocorrencias, lista->nome_arquivo);
-            lista = lista->prox;
+    printf("\nDeseja pesquisar quantas palavras? ");
+    scanf ("%d", &palavras);
+    float ** matriz = Fazer_Matriz(Numero_Arquivos, palavras);
+    flush_in();
+    for (int i = 0; i < palavras; i++){
+        printf("\nDigite a palavra %d: ", i+1);
+        scanf("%s", palavra);
+        flush_in();
+        lista = Buscar_Palavra(&no, palavra);
+        lista_aux = lista;
+        if (lista == NULL) printf("Palavra nao encontrada!\n");
+        else printf("Palavra encontrada!\n");
+        Retorna_Peso(&lista_aux,  Numero_Arquivos, contador, palavras, matriz);
+        contador+=1;
     }
-    while(lista != NULL); 
-    printf("\n");
+    printf("\nMatriz de pesos:\n");
+    for (int i = 0; i < palavras; i++){
+        for (int j = 0; j < Numero_Arquivos-1; j++){
+            printf("%2f ", matriz[i][j]);
+        }
+        printf("\n");
+    }
+
     return 0;
     
-}
 }

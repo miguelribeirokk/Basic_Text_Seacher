@@ -1,12 +1,3 @@
-gerei aleatorio algumas vezes
-entao o jogo vai continuar
-mas o jogador vai perder
-o jogador vai perder
-o jogador vai perder
-talvez o jogador vai perder
-para com isso eu criei uma funcao
-que vai gerar um numero aleatorio
-gerei aleatorio algumas vezes
 entao o jogo vai continuar
 mas o jogador vai perder
 o jogador vai perder
@@ -44,6 +35,15 @@ vai vai vai
 vai vai vai
 gerei aleatorio algumas vezes
 entao o jogo vai continuar
+gerei aleatorio algumas vezes
+entao o jogo vai continuar
+mas o jogador vai perder
+o jogador vai perder
+o jogador vai perder
+talvez o jogador vai perder
+para com isso eu criei uma funcao
+que vai gerar um numero aleatorio
+gerei aleatorio algumas vezes
 mas o jogador vai perder
 o jogador vai perder
 o jogador vai perder

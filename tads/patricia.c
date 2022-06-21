@@ -126,8 +126,8 @@ int Incrementa_Ocorrencias(No_Patricia **no, char *filename){
 }
 
 int Insere_Palavra(No_Patricia **no, char *palavra, char *filename){
-  
-  
+    
+    
     int Posicao_Diferente;
     No_Patricia **No_Auxiliar = no;
     char caractere;
@@ -144,7 +144,6 @@ int Insere_Palavra(No_Patricia **no, char *palavra, char *filename){
     }
     Posicao_Diferente = No_Diferente(No_Auxiliar, palavra);
     if(Posicao_Diferente == -1){
-      
         return Incrementa_Ocorrencias(No_Auxiliar, filename); //Se a palavra é igual, incrementa ocorrencia
     }
     if (palavra[Posicao_Diferente] > ((**No_Auxiliar).No.externo.palavra)[Posicao_Diferente]) {

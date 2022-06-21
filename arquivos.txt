@@ -1,6 +1,6 @@
-2
-borbo.txt
-miau.txt
-chop.txt
-ciranda.txt
-aleatorio.txt
+5
+arquivo1.txt
+arquivo2.txt
+arquivo3.txt
+arquivo4.txt
+arquivo5.txt
