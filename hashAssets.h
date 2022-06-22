@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "tads/linked_list.h"
 
 
 
@@ -10,7 +11,9 @@ typedef struct tipoItem {
     struct tipoItem *next;
     int idArq;// nome do docPai
     int numDeRepeticoes;// n de rep
+    Lista_Encadeada *lista;
 } tipoItem;
+
 
 typedef struct {
     int countItens;
