@@ -1,3 +1,8 @@
+//Implementado por:
+//Miguel Antonio Ribeiro e Silva - 4680
+//Alan Gabriel Martins Silva - 4663
+//Vinicius Alves Gontijo - 4708
+//Gabriel Ryan -
 #ifndef  ABRIR_ARQUIVO_H
 #define ABRIR_ARQUIVO_H
 

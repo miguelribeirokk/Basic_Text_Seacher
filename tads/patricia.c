@@ -1,8 +1,14 @@
-#include "patricia.h"
-#include "lista_patricia.h"
+//Implementado por:
+//Miguel Antonio Ribeiro e Silva - 4680
+//Alan Gabriel Martins Silva - 4663
+//Vinicius Alves Gontijo - 4708
+//Gabriel Ryan -
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "patricia.h"
+#include "linked_list.h"
 
 
 int Inicializa(No_Patricia **no) { //Inicializa a arvore
@@ -19,12 +25,12 @@ int Externo(No_Patricia **no) { //Funcao que verifica se o nó é externo
 
 int Confere(No_Patricia **no, char *palavra){ //Confere se é maior ou menor
     if(strlen(palavra) < (**no).No.interno.posicao) return 0; //Verifica se a palavra é menor que o tamanho do no
-    if (palavra[(**no).No.interno.posicao] >= (**no).No.interno.caractere) return 1;
+    if (palavra[(**no).No.interno.posicao] >= (**no).No.interno.caractere) return 1; //Se for maior, retorna 1
   return 0;
 } 
 
 
-int Cria_No_Externo(No_Patricia **no, char *palavra, char *arquivo) { //Cria nó externo
+int Cria_No_Externo(No_Patricia **no, char *palavra, int arquivo) { //Cria nó externo
   int tamanho = 1;
   while ((palavra[tamanho]) != '\0') tamanho++;
   (*no) = malloc(sizeof(No_Patricia));
@@ -34,7 +40,7 @@ int Cria_No_Externo(No_Patricia **no, char *palavra, char *arquivo) { //Cria nó
   if ((**no).No.externo.palavra == NULL) return 0;
   strcpy((**no).No.externo.palavra, palavra); //Copia a palavra para o nó
   (**no).No.externo.lista = NULL;
-  LE_Criar_No(&((**no).No.externo.lista), arquivo); //Cria nó na lista
+  LE_Criar_No(&((**no).No.externo.lista), arquivo); //Cria nó na lista encadeada
   return 1;
 } 
 
@@ -58,7 +64,7 @@ int Cria_No_Interno(No_Patricia **no, char caractere, int posicao, No_Patricia *
         }
     posicao++;
     }
-  return posicao;
+  return posicao; //Retorna a posicao onde se diferem
   }
 
 int Retornar_Posicao(No_Patricia **no){ 
@@ -72,21 +78,21 @@ char Retornar_Caractere(No_Patricia **no, int posicao){
     return ((**no)).No.interno.caractere;
 }
 
-int Insere_Entre(No_Patricia **no, char *palavra, int posicao, char caractere, char *filename){
-
+int Insere_Entre(No_Patricia **no, char *palavra, int posicao, char caractere, int filename){
+  //Insere entre dois nós
     No_Patricia *No_Criado = NULL, *Troca = *no;
     char Palavra_No_Interno;
     if(Externo(no)){
       Cria_No_Externo(&No_Criado, palavra, filename); //Cria no externo
       Palavra_No_Interno = Retornar_Caractere(no, posicao); //Retorna caractere
-      if(palavra[posicao] > Palavra_No_Interno){
-          return Cria_No_Interno(no, palavra[posicao], posicao, &Troca, &No_Criado); //Se a palavra é maior, cria no interno com a palavra[posicao]
+      if(palavra[posicao] > Palavra_No_Interno){ 
+          return Cria_No_Interno(no, palavra[posicao], posicao, &Troca, &No_Criado); //Se a palavra é maior, retorna no interno
       }
       else{
-          return Cria_No_Interno(no, Palavra_No_Interno, posicao, &No_Criado, &Troca); //Se a palavra é menor, cria no interno com Palavra_No_Interno
+          return Cria_No_Interno(no, Palavra_No_Interno, posicao, &No_Criado, &Troca); //Se a palavra é menor, retorna no interno
       }
     }
-  if(posicao < (**no).No.interno.posicao){
+  if(posicao < (**no).No.interno.posicao){ //
     Cria_No_Externo(&No_Criado, palavra, filename); 
     Palavra_No_Interno = Retornar_Caractere(no, posicao); 
     if (palavra[posicao] >= caractere) {
@@ -96,18 +102,20 @@ int Insere_Entre(No_Patricia **no, char *palavra, int posicao, char caractere, c
       return Cria_No_Interno(no, caractere, posicao, &No_Criado, &Troca); 
     }
   }
-   if (posicao == (**no).No.interno.posicao && palavra[posicao] > Retornar_Caractere(no, posicao)) {
-    Cria_No_Externo(&No_Criado, palavra, filename);
-    Palavra_No_Interno = Retornar_Caractere(no, posicao);
+   if (posicao == (**no).No.interno.posicao && palavra[posicao] > Retornar_Caractere(no, posicao)) { 
+    //Posicao igual e palavra maior que o caractere da posicao
+    Cria_No_Externo(&No_Criado, palavra, filename);  //Cria no externo
+    Palavra_No_Interno = Retornar_Caractere(no, posicao); //Retorna caractere
   
     if (palavra[posicao] > Palavra_No_Interno) {
-      return Cria_No_Interno(no, palavra[posicao], posicao, &Troca, &No_Criado); //Se a palavra é maior, cria no interno com a palavra[posicao]
+      return Cria_No_Interno(no, palavra[posicao], posicao, &Troca, &No_Criado); //Se a palavra é maior, retorna na cria no interno com a palavra[posicao]
     }
     else{
-      return Cria_No_Interno(no, Palavra_No_Interno, posicao, &No_Criado, &Troca); //Se a palavra é menor, cria no interno com Palavra_No_Interno
+      return Cria_No_Interno(no, Palavra_No_Interno, posicao, &No_Criado, &Troca); //Se a palavra é menor, retorna cria no interno com Palavra_No_Interno
     }
    }
    if(Confere(no, palavra)){
+    //Confere se é maior ou menor
     return Insere_Entre(&((**no).No.interno.dir), palavra, posicao, caractere, filename);
    }
    else{
@@ -116,7 +124,7 @@ int Insere_Entre(No_Patricia **no, char *palavra, int posicao, char caractere, c
    return 0;
 }
 
-int Incrementa_Ocorrencias(No_Patricia **no, char *filename){
+int Incrementa_Ocorrencias(No_Patricia **no, int filename){
     if((**no).TipoNo == interno){
         return 0; //Se for interno, não incrementa ocorrencia
     }
@@ -125,29 +133,27 @@ int Incrementa_Ocorrencias(No_Patricia **no, char *filename){
      //Se for externo, incrementa ocorrencia
 }
 
-int Insere_Palavra(No_Patricia **no, char *palavra, char *filename){
-    
-    
+int Insere_Palavra(No_Patricia **no, char *palavra, int filename){
     int Posicao_Diferente;
     No_Patricia **No_Auxiliar = no;
     char caractere;
     if((*no) == NULL){
          return Cria_No_Externo(no, palavra, filename); //Cria no externo
     }
-    while (!Externo(No_Auxiliar)) {
+    while (!Externo(No_Auxiliar)) { //Enquanto não for externo
       if(Confere(No_Auxiliar, palavra)){
-        No_Auxiliar = &((**No_Auxiliar).No.interno.dir); //Se a palavra é maior, insere na direita
+        No_Auxiliar = &((**No_Auxiliar).No.interno.dir); //Se a palavra é maior, No auxiliar recebe o direito
       }
       else{
-        No_Auxiliar = &((**No_Auxiliar).No.interno.esq); //Se a palavra é menor, insere na esquerda
+        No_Auxiliar = &((**No_Auxiliar).No.interno.esq); //Se a palavra é menor, No auxiliar recebe o esquerdo
       }
     }
-    Posicao_Diferente = No_Diferente(No_Auxiliar, palavra);
+    Posicao_Diferente = No_Diferente(No_Auxiliar, palavra); //Retorna a posicao onde se diferem
     if(Posicao_Diferente == -1){
         return Incrementa_Ocorrencias(No_Auxiliar, filename); //Se a palavra é igual, incrementa ocorrencia
     }
     if (palavra[Posicao_Diferente] > ((**No_Auxiliar).No.externo.palavra)[Posicao_Diferente]) {
-      caractere = palavra[Posicao_Diferente]; 
+      caractere = palavra[Posicao_Diferente];  //Se a palavra é maior, caractere recebe a palavra[Posicao_Diferente]
     }
     else{
       caractere = ((**No_Auxiliar).No.externo.palavra)[Posicao_Diferente]; //Pega o caractere da palavra
@@ -196,17 +202,17 @@ Lista_Encadeada *Buscar_Palavra(No_Patricia **no, char *palavra){
   return NULL;
 }
 
-/*int Remove_No(No_Patricia **no){
+int Free_Patricia(No_Patricia **no){
   if(*no != NULL){
     if(Externo(no)){
-      LE_Remove_No(&(**no).No.externo.lista); //Remove ocorrencia
+      Free_Lista(&(**no).No.externo.lista); //Remove ocorrencia
     }
     else{
-      Remove_No(&((**no).No.interno.esq)); //Remove da esquerda
-      Remove_No(&((**no).No.interno.dir)); //Remove da direita 
+      Free_Patricia(&((**no).No.interno.esq)); //Remove da esquerda
+      Free_Patricia(&((**no).No.interno.dir)); //Remove da direita 
     }
     free (*no);
     (*no) = NULL;
     return 0;
   }
-}*/
+}
