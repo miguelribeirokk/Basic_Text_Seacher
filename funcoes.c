@@ -12,6 +12,7 @@
 
 #include "funcoes.h"
 #include "tads/patricia.h"
+#include "tads/hashAssets.h"
 #include "tads/linked_list.h"
 
 
@@ -38,7 +39,7 @@ char *Transformar_Palavra(char palavra[100]){
 
 
 
-void Abrir_Arquivo(char nome[100], No_Patricia **no, int Numero_Arquivos){
+void Abrir_Arquivo(char nome[100], No_Patricia **no,  int Numero_Arquivos){
     char pasta[100] = "arquivos/"; //Caminho da pasta
     char palavra[100];
     FILE *arquivo2 = NULL;
@@ -59,7 +60,7 @@ void Abrir_Arquivo(char nome[100], No_Patricia **no, int Numero_Arquivos){
         }
         Transformar_Palavra(palavra); //Transforma a palavra em minúsculo
         Insere_Palavra(no, palavra, Numero_Arquivos); //Insere a palavra na arvore patricia
-        //inserir tabela hash;
+        //inserirNaTabela(hash, palavra, Numero_Arquivos); //Insere a palavra na tabela hash
         
         
         
@@ -100,7 +101,7 @@ void Retorna_Peso(Lista_Encadeada **lista, int Numero_Arquivos, int contador, fl
                     ocorrencias = lista2->ocorrencias;
                     numero_docs++;
                     lista2 = lista2->prox;
-                    peso[contador][i-1] = (ocorrencias*(log10(Numero_Arquivos-1)/numero_docs)); 
+                    peso[contador][i-1] = (ocorrencias*(log(Numero_Arquivos-1)/numero_docs)); 
             }
             else{
                  peso[contador][i-1]= 0.0;

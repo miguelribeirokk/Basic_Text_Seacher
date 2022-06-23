@@ -43,6 +43,7 @@ hashTable *iniciaTabela(int tamanho) {
 }
 
 void inserirNaTabela(hashTable *hashtable, const char *key, int idDoArquivo){
+    printf("palavra %s\n", key);
     unsigned int slot = hash(key,hashtable->tamanho);
     // utiliza a funçao hash para entrar com os valores em um indice
     tipoItem *entry = hashtable->entries[slot];
@@ -146,38 +147,39 @@ void printaTabela(hashTable *tabela){
     }
 }
 
-// int calcPalavras(hashTable *tabela,int idArq){
-//     int contPalavras = 0;
-//     tipoItem *aux;
-//     for(int i = 0; i < tabela->tamanho; i++){
-//         tipoItem *entry = tabela->entries[i];
-//         if(entry == NULL){
-//             continue;
-//         }
-//         else if(entry->idArq == idArq){
-//             contPalavras++;
-//         }
-//         aux = entry->next;
-//         while(aux != NULL){
-//             if(strcmp(entry->key,aux->key) == 0){
-//                 ;
-//             }
-//             if(aux->idArq == idArq){
-//                 contPalavras++;
-//             }
-//             aux = aux->next;
-//         }
+ /*int calcPalavras(hashTable *tabela,int idArq){
+    int contPalavras = 0;
+     tipoItem *aux;
+     for(int i = 0; i < tabela->tamanho; i++){
+        tipoItem *entry = tabela->entries[i];
+         if(entry == NULL){
+            continue;
+         }
+         else if(entry-> == idArq){
+             contPalavras++;
+         }
+         aux = entry->next;
+         while(aux != NULL){
+           if(strcmp(entry->key,aux->key) == 0){
+                ;
+            }
+           if(aux->idArq == idArq){
+                 contPalavras++;
+             }
+             aux = aux->next;
+        }
         
         
 //     }
 //     free(aux);
 //     return contPalavras;
 //     // return contPalavras;
-// }
+// }*/
 
 
-int main(){
+/*int main(){
     hashTable *ht = iniciaTabela(15); //add tamanho
+    Lista_Encadeada **lista;
     inserirNaTabela(ht, "allan", 1);
     inserirNaTabela(ht, "iury", 1);
     inserirNaTabela(ht, "aaaaaaaaaa", 1);   
@@ -282,7 +284,16 @@ int main(){
     inserirNaTabela(ht, "aaaaaaaaaa", 3);
     inserirNaTabela(ht, "aaaaaaaaaa", 3);
     printaTabela(ht);
-    // printf("%d",calcPalavras(ht,1));
-    // imprimeOrdenado(ht);
-    return 0;
-}
+    //procurar uma palavra na tabela
+    printf("\nProcurando uma palavra na tabela\n");
+    lista = procurarNaTabela(ht, "aaaaaaaaaa");
+    if (lista != NULL) {
+        printf("\nPalavra encontrada\n");
+        LE_Printa_Lista(lista);
+        
+    } else {
+        printf("\nPalavra não encontrada\n");
+    }
+     printf("%d",calcPalavras(ht,1));
+    // imprimeOrdenado(ht);*/
+   // return 0;}

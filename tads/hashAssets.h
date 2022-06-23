@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "tads/linked_list.h"
+#include "linked_list.h"
 
 
 
@@ -13,7 +13,7 @@ typedef struct tipoItem {
 } tipoItem;
 
 
-typedef struct {
+typedef struct hashTable {
     int countItens;
     int tamanho;
     tipoItem **entries;
