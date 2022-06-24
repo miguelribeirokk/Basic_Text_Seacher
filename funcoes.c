@@ -4,16 +4,10 @@
 //Vinicius Alves Gontijo - 4708
 //Gabriel Ryan -
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
 
-
-#include "funcoes.h"
-#include "tads/patricia.h"
 #include "tads/hashAssets.h"
-#include "tads/linked_list.h"
+#include "funcoes.h"
+#include "cores/cores.h"
 
 
 FILE* Ler_Arquivo(char arquivo[100]){
@@ -39,7 +33,7 @@ char *Transformar_Palavra(char palavra[100]){
 
 
 
-void Abrir_Arquivo(char nome[100], No_Patricia **no,  int Numero_Arquivos){
+void Abrir_Arquivo(char nome[100], No_Patricia **no, hashTable *tabela,  int Numero_Arquivos){
     char pasta[100] = "arquivos/"; //Caminho da pasta
     char palavra[100];
     FILE *arquivo2 = NULL;
@@ -60,7 +54,7 @@ void Abrir_Arquivo(char nome[100], No_Patricia **no,  int Numero_Arquivos){
         }
         Transformar_Palavra(palavra); //Transforma a palavra em minúsculo
         Insere_Palavra(no, palavra, Numero_Arquivos); //Insere a palavra na arvore patricia
-        //inserirNaTabela(hash, palavra, Numero_Arquivos); //Insere a palavra na tabela hash
+        inserirNaTabela(tabela, palavra, Numero_Arquivos); //Insere a palavra na tabela hash
         
         
         

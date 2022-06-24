@@ -4,9 +4,6 @@
 //Vinicius Alves Gontijo - 4708
 //Gabriel Ryan -
 #include "linked_list.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 int Inicializa_Lista(Lista_Encadeada **no) { //Inicializa a lista
   (*no) = NULL;

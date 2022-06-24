@@ -3,20 +3,15 @@
 //Alan Gabriel Martins Silva - 4663
 //Vinicius Alves Gontijo - 4708
 //Gabriel Ryan -
-#include "stdio.h"
-#include "stdlib.h"
-#include "string.h"
-
-#include "tads/patricia.h"
-#include "tads/linked_list.h"
 #include "tads/hashAssets.h"
 #include "funcoes.h"
-#include "cores/cores.h"
+
 
 
 int main(void){
     No_Patricia *no;
     Lista_Encadeada *lista, *lista_aux;
+    hashTable *ht = iniciaTabela(17);
     int fim, palavras, contador = 0, Numero_Arquivos = 0, opcao = 0;
     char *nome_arquivo = (char *)malloc(sizeof(char));
     char *palavra = (char*)malloc(sizeof(char));
@@ -68,13 +63,12 @@ int main(void){
             White();
             Inicializa(&no); //Inicializa a arvore
             Inicializa_Lista(&lista); //Inicializa a lista
-            hashTable *ht = iniciaTabela(17);
             while(!feof(arquivo)){
                 fim = fscanf(arquivo, "%s", nome); //Le os nomes dos arquivos
                 if (fim == EOF){
                     break;
                 }
-               Abrir_Arquivo(nome, &no, Numero_Arquivos); //Abre os arquivos
+               Abrir_Arquivo(nome, &no, ht, Numero_Arquivos); //Abre os arquivos
                 Numero_Arquivos++;
             }
                 fclose(arquivo);
@@ -97,7 +91,8 @@ int main(void){
                 flush_in();
                 continue;
             }
-            Printar_Palavra(&no); //Imprime as palavras da arvore em ordem alfabetica
+            // Printar_Palavra(&no); //Imprime as palavras da arvore em ordem alfabetica
+            printaTabela(ht);
             Pink();
             printf("Pressione enter para continuar");
             getchar();

@@ -1,6 +1,10 @@
 #ifndef linked_list_h
 #define linked_list_h
-
+#include <limits.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
 typedef struct Lista_Encadeada{
     unsigned int ocorrencias;
     int nome_arquivo;
