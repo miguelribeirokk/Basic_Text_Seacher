@@ -21,6 +21,7 @@ tipoItem *criaItem(const char *key, int indiceDoArq);
 hashTable *iniciaTabela(int tamanho);
 void inserirNaTabela(hashTable *hashtable, const char *key, int idDoArquivo);
 Lista_Encadeada **procurarNaTabela(hashTable *hashtable, const char *key);
-void removerDaTabela(hashTable *hashtable, const char *key);
 void printaTabela(hashTable *tabela);
+void printaPalavras_Hash(hashTable *tabela);
+void Free_Table(hashTable *hashtable);
 // int calcPalavras(hashTable *tabela,int idArq);

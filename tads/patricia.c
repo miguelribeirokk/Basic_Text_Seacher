@@ -6,7 +6,7 @@
 #include "patricia.h"
 
 
-int Inicializa(No_Patricia **no) { //Inicializa a arvore
+int Inicializa_Patricia(No_Patricia **no) { //Inicializa a arvore
   (*no) = NULL;
   return 1;
 } 
@@ -198,6 +198,9 @@ Lista_Encadeada *Buscar_Palavra(No_Patricia **no, char *palavra){
 }
 
 int Free_Patricia(No_Patricia **no){
+  if(*no == NULL){
+    return 1;
+  }
   if(*no != NULL){
     if(Externo(no)){
       Free_Lista(&(**no).No.externo.lista); //Remove ocorrencia

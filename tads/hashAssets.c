@@ -43,7 +43,6 @@ hashTable *iniciaTabela(int tamanho) {
 }
 
 void inserirNaTabela(hashTable *hashtable, const char *key, int idDoArquivo){
-    printf("palavra %s\n", key);
     unsigned int slot = hash(key,hashtable->tamanho);
     // utiliza a funçao hash para entrar com os valores em um indice
     tipoItem *entry = hashtable->entries[slot];
@@ -84,49 +83,20 @@ Lista_Encadeada **procurarNaTabela(hashTable *hashtable, const char *key) {
     return NULL;
 }
 
-
-void removerDaTabela(hashTable *hashtable, const char *key){
-    unsigned int bucket = hash(key,hashtable->tamanho);
-    // try to find a valid bucket
-    tipoItem *entry = hashtable->entries[bucket];   
-    // no bucket means no entry
-    if (entry == NULL){
-        return;
-    }
-    tipoItem *prev;
-    int idx = 0;
-
-    // walk through each entry until either the end is reached or a matching key is found
-    while (entry != NULL) {
-        // check key
-        if (strcmp(entry->key, key) == 0) {
-            // first item and no next entry
-            if (entry->next == NULL && idx == 0) {
-                hashtable->entries[bucket] = NULL;
-            }
-            // first item with a next entry
-            if (entry->next != NULL && idx == 0) {
-                hashtable->entries[bucket] = entry->next;
-            }
-            // last item
-            if (entry->next == NULL && idx != 0) {
-                prev->next = NULL;
-            }
-            // middle item
-            if (entry->next != NULL && idx != 0) {
-                prev->next = entry->next;
-            }
-            // free the deleted entry
-            free(entry->key);
-            
-            free(entry);
-            return;
+void Free_Table(hashTable *hashtable){
+    int i = 0;
+    for(; i < hashtable->tamanho; ++i){
+        tipoItem *entry = hashtable->entries[i];
+        while(entry != NULL){
+            tipoItem *temp = entry;
+            entry = entry->next;
+            free(temp->key);
+            free(temp->lista);
+            free(temp);
         }
-        // walk to next
-        prev = entry;
-        entry = prev->next;
-        ++idx;
     }
+    free(hashtable->entries);
+    free(hashtable);
 }
 
 void printaTabela(hashTable *tabela){
@@ -136,7 +106,7 @@ void printaTabela(hashTable *tabela){
             continue;
         }
         for(;;) {
-            printf("%s", entry->key);
+            printf("\n%s", entry->key);
             LE_Printa_Lista(&(entry->lista));
             if (entry->next == NULL) {
                 break;
@@ -147,7 +117,24 @@ void printaTabela(hashTable *tabela){
     }
 }
 
- /*int calcPalavras(hashTable *tabela,int idArq){
+void printaPalavras_Hash(hashTable *tabela){
+    for(int i = 0; i < tabela->tamanho; ++i) {
+        tipoItem *entry = tabela->entries[i];
+        if(entry == NULL) {
+            continue;
+        }
+        for(;;) {
+            printf("\n%s", entry->key);
+            if (entry->next == NULL) {
+                break;
+            }
+            entry = entry->next;
+        }
+        printf("\n");
+    }
+}
+
+/*int calcPalavras(hashTable *tabela,int idArq){
     int contPalavras = 0;
      tipoItem *aux;
      for(int i = 0; i < tabela->tamanho; i++){
@@ -167,133 +154,4 @@ void printaTabela(hashTable *tabela){
                  contPalavras++;
              }
              aux = aux->next;
-        }
-        
-        
-//     }
-//     free(aux);
-//     return contPalavras;
-//     // return contPalavras;
-// }*/
-
-
-/*int main(){
-    hashTable *ht = iniciaTabela(15); //add tamanho
-    Lista_Encadeada **lista;
-    inserirNaTabela(ht, "allan", 1);
-    inserirNaTabela(ht, "iury", 1);
-    inserirNaTabela(ht, "aaaaaaaaaa", 1);   
-    inserirNaTabela(ht, "matheus", 1);
-    inserirNaTabela(ht, "aaaaaaaaaa", 1);   
-    inserirNaTabela(ht, "miguel", 2);
-    inserirNaTabela(ht, "teste", 2);
-    inserirNaTabela(ht, "aaaaaaaaaa", 2);
-    inserirNaTabela(ht, "aaaaaaaaaa", 2);
-    inserirNaTabela(ht, "aaaaaaaaaa", 2);
-    inserirNaTabela(ht, "aaaaaaaaaa", 2);
-    inserirNaTabela(ht, "vinicius", 3);
-    inserirNaTabela(ht, "joao", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    printaTabela(ht);
-    //procurar uma palavra na tabela
-    printf("\nProcurando uma palavra na tabela\n");
-    lista = procurarNaTabela(ht, "aaaaaaaaaa");
-    if (lista != NULL) {
-        printf("\nPalavra encontrada\n");
-        LE_Printa_Lista(lista);
-        
-    } else {
-        printf("\nPalavra não encontrada\n");
-    }
-     printf("%d",calcPalavras(ht,1));
-    // imprimeOrdenado(ht);*/
-   // return 0;}
+        }*/
