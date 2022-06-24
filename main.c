@@ -41,9 +41,7 @@ int main(void){
             Pink();
             printf("Digite a opcao desejada: ");
             White();
-            int x = scanf("%d", &opcao);
-            
-
+            scanf("%d", &opcao);
             flush_in();
             continue;
         }
@@ -60,6 +58,7 @@ int main(void){
                 printf("\nErro ao abrir o arquivo\n");
                 Pink();
                 printf("\nDigite 1 para abrir um arquivo ou 0 pra voltar ao menu: ");
+                White();
                 scanf("%d", &opcao);
                 flush_in();
                 continue;
@@ -176,7 +175,6 @@ int main(void){
                 }
                 printf("\n");
             }
-            free(matriz); 
             Pink();
             printf("\nPressione enter para continuar"); 
             getchar(); 
