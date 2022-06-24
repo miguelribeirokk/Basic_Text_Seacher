@@ -1,0 +1,23 @@
+Este programa só funciona em ambiente Linux.
+
+Comando para compilar o programa:
+    make
+
+Comando para executar o programa:
+    ./main
+
+Comando para compilar e executar o programa:
+    make run
+
+Caso não tenha o make instalado no seu Linux:
+    sudo apt-get install make
+
+Caso não tenha o gcc instalado no seu Linux:
+    sudo apt-get install gcc
+
+Para fazer seus proprios testes, basta adicionar seu arquivo.txt na pasta do programa,
+o arquivo deverá conter o nome de todos os arquivos que serão lidos,
+e todos deverão ser adicionados na pasta arquivos.
+Caso seus arquivos possuem caracteres especiais, use o script de conversão remove.py,
+que está na pasta remove. Este script remove todos os caracteres especiais do arquivo.
+Leia o README.txt da pasta remove para mais informações.

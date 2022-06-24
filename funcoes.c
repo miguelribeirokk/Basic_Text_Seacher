@@ -95,11 +95,20 @@ void Retorna_Peso(Lista_Encadeada **lista, int Numero_Arquivos, int contador, fl
     //Calcula os pesos e os insere na matriz
     int ocorrencias = 0, numero_docs = 0, numero = 0;
     Lista_Encadeada *lista2 = *lista;
+    Lista_Encadeada *lista3 = *lista;
+    for (int i = 1; i < Numero_Arquivos; i++){
+        if (lista3!= NULL){
+            if (lista3->nome_arquivo == i){
+                numero_docs++;
+                lista3 = lista3->prox;
+            }
+        }
+    }
+    free(lista3);
     for (int i = 1; i < Numero_Arquivos; i++){
         if (lista2!= NULL){
             if (lista2->nome_arquivo == i){
                     ocorrencias = lista2->ocorrencias;
-                    numero_docs++;
                     lista2 = lista2->prox;
                     peso[contador][i-1] = (ocorrencias*(log(Numero_Arquivos-1)/numero_docs)); 
             }
@@ -111,6 +120,7 @@ void Retorna_Peso(Lista_Encadeada **lista, int Numero_Arquivos, int contador, fl
             peso[contador][i-1] = 0.0;
         }
     }
+    free(lista2);
     return;
 }
         

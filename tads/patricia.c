@@ -130,7 +130,7 @@ int Incrementa_Ocorrencias(No_Patricia **no, int filename){
     }
     
     return LE_Insere_No(&((**no).No.externo.lista), filename);
-     //Se for externo, incrementa ocorrencia
+     //Se for externo, incrementa ocorrencia, pois a palavra já existe
 }
 
 int Insere_Palavra(No_Patricia **no, char *palavra, int filename){
@@ -138,7 +138,7 @@ int Insere_Palavra(No_Patricia **no, char *palavra, int filename){
     No_Patricia **No_Auxiliar = no;
     char caractere;
     if((*no) == NULL){
-         return Cria_No_Externo(no, palavra, filename); //Cria no externo
+         return Cria_No_Externo(no, palavra, filename); //Cria no externo, se não existir nenhum nó
     }
     while (!Externo(No_Auxiliar)) { //Enquanto não for externo
       if(Confere(No_Auxiliar, palavra)){

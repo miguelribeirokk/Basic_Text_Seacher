@@ -172,7 +172,7 @@ int main(void){
              printf("\nMatriz de pesos:\n");
             for (int i = 0; i < palavras; i++){
                 for (int j = 0; j < Numero_Arquivos-1; j++){
-                    printf("%2f ", matriz[i][j]);
+                    printf("%.2f ", matriz[i][j]);
                 }
                 printf("\n");
             }
@@ -200,6 +200,6 @@ int main(void){
     printf("\n\nSaindo do programa\n");
     printf("Obrigado por usar o programa!\n\n\n");
     White();
-    Free_Patricia(&no); //Limpa a memoria
+    Free_Patricia(&no); //Limpa a memoria da patricia e das listas
     return 0;
 }
