@@ -3,12 +3,7 @@
 //Alan Gabriel Martins Silva - 4663
 //Vinicius Alves Gontijo - 4708
 //Gabriel Ryan -
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "patricia.h"
-#include "linked_list.h"
 
 
 int Inicializa(No_Patricia **no) { //Inicializa a arvore
