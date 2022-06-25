@@ -55,9 +55,6 @@ void Abrir_Arquivo(char nome[100], No_Patricia **no, hashTable *tabela,  int Num
         Transformar_Palavra(palavra); //Transforma a palavra em minúsculo
         Insere_Palavra(no, palavra, Numero_Arquivos); //Insere a palavra na arvore patricia
         inserirNaTabela(tabela, palavra, Numero_Arquivos); //Insere a palavra na tabela hash
-        
-        
-        
     }
     fclose(arquivo2);
     return;
@@ -70,26 +67,12 @@ void flush_in() { //Limpa o buffer de entrada
     } while (ch != EOF && ch != '\n');
 }
 
-float **Fazer_Matriz(int num_arquivos, int palavras){
-    //Cria a matriz de pesos alocada dinamicamente
-    float **matriz = (float **)malloc(palavras * sizeof(float *));
-    for (int i = 0; i < num_arquivos*palavras; i++){
-        matriz[i] = (float *)malloc(num_arquivos-1 * sizeof(float));
-    }
-    
-    for (int i = 0; i < palavras; i++){
-        for (int j = 0; j < num_arquivos-1; j++){
-            matriz[i][j] = 0;
-        }
-    }
-    return matriz;
-}
-
 void Retorna_Peso(Lista_Encadeada **lista, int Numero_Arquivos, int contador, float **peso){
     //Calcula os pesos e os insere na matriz
     int ocorrencias = 0, numero_docs = 0, numero = 0;
     Lista_Encadeada *lista2 = *lista;
     Lista_Encadeada *lista3 = *lista;
+    Numero_Arquivos += 1;
     for (int i = 1; i < Numero_Arquivos; i++){
         if (lista3!= NULL){
             if (lista3->nome_arquivo == i){
@@ -104,16 +87,15 @@ void Retorna_Peso(Lista_Encadeada **lista, int Numero_Arquivos, int contador, fl
             if (lista2->nome_arquivo == i){
                     ocorrencias = lista2->ocorrencias;
                     lista2 = lista2->prox;
-                    peso[contador][i-1] = (ocorrencias*(log(Numero_Arquivos-1)/numero_docs)); 
+                    peso[contador][i-1] = (ocorrencias*(log(Numero_Arquivos-1)/numero_docs));
             }
             else{
-                 peso[contador][i-1]= 0.0;
             }
         }
         else{
-            peso[contador][i-1] = 0.0;
         }
     }
+    
     free(lista2);
     return;
 }

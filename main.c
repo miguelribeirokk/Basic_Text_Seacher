@@ -18,7 +18,7 @@ int main(void){
     Inicializa_Patricia(&no); //Inicializa a arvore
     Inicializa_Lista(&lista_pat); //Inicializa a lista de palavras na arvore
     Inicializa_Lista(&lista_aux_pat);
-    int fim, palavras, contador = 0, Numero_Arquivos = 0, opcao = 0;
+    int fim, palavras, contador = 0, Numero_Arquivos = 0, opcao = 0, numero = 0;
     char *nome_arquivo = (char *)malloc(sizeof(char));
     char *palavra = (char*)malloc(sizeof(char));
     char nome[100];
@@ -76,13 +76,12 @@ int main(void){
             Green();
             printf("\nArquivo aberto com sucesso\n");
             White();
-            while(!feof(arquivo)){
-                fim = fscanf(arquivo, "%s", nome); //Le os nomes dos arquivos
-                if (fim == EOF){
-                    break;
-                }
-                Abrir_Arquivo(nome, &no, ht, Numero_Arquivos); //Abre os arquivos
-                Numero_Arquivos++;
+            fscanf(arquivo, "%d", &Numero_Arquivos);
+            for (int i = 0; i < Numero_Arquivos; i++) {
+                fscanf(arquivo, "%s", nome);
+                numero += 1;
+                printf("%s\n", nome);
+                Abrir_Arquivo(nome, &no, ht, numero);
             }
                 fclose(arquivo);
                 Green();
@@ -160,41 +159,55 @@ int main(void){
             printf("2 - Hash\n");
             scanf("%d", &opcao);
             flush_in();
-            float ** matriz = Fazer_Matriz(Numero_Arquivos, palavras); //Cria a matriz de pesos
+            float ** mat = malloc((sizeof (float *) * palavras));
+            float *buf = malloc((sizeof (float) * palavras * Numero_Arquivos));
+            for (int i = 0; i < palavras; i++){
+                mat[i] = &buf[i*Numero_Arquivos];
+            }
+            for (int i = 0; i < palavras; i++){
+                for (int j = 0; j < Numero_Arquivos; j++){
+                    mat[i][j] = 0;
+                }
+            }
             if(opcao == 1){
                 contador = 0;
-                for (int i = 0; i < palavras; i++){
+                for (int i = 0; i < palavras; i++) {
                     printf("\nDigite a palavra %d: ", i+1);
                     scanf("%s", palavra);
                     flush_in();
-                    lista_pat = Buscar_Palavra(&no, palavra); //Busca a palavra na arvore Patricia
+                    lista_pat = Buscar_Palavra(&no, palavra); 
                     lista_aux_pat = lista_pat;
                     if (lista_pat== NULL){
                         Red();
                         printf("Palavra nao encontrada!\n");
                         White();
-                        continue;
                     }
                     else{
                         Green();
                         printf("Palavra encontrada!\n");
                         White();
+                        Retorna_Peso(&lista_aux_pat, Numero_Arquivos, contador, mat); //Retorna o peso de cada arquivo
                     }
-                    Retorna_Peso(&lista_aux_pat,  Numero_Arquivos, contador, matriz); //Calcula o peso de cada palavra em cada arquivo e coloca na matriz
                     contador+=1; 
                 }
-                //calcular a relevancia de cada arquivo
-                printf("\nMatriz de pesos:\n");
-                    for (int i = 0; i < palavras; i++){
-                        for (int j = 0; j < Numero_Arquivos-1; j++){
-                            printf("%.2f ", matriz[i][j]);
+                    printf("\nMatriz de pesos:\n");
+                    for (int p = 0; p < palavras; p++){
+                        for (int h = 0; h < Numero_Arquivos;h++){
+                            printf("%.2f ", mat[p][h]);
                         }
                     printf("\n");
-                    }  
+                    }
             }
             if(opcao == 2){
                 contador = 0;
                 for (int i = 0; i < palavras; i++){
+                    printf("\nMatriz de pesos:\n");
+                    for (int p = 0; p < palavras; p++){
+                        for (int h = 0; h < Numero_Arquivos-1;h++){
+                            printf("%.2f ", mat[p][h]);
+                        }
+                    printf("\n");
+                    }
                     printf("\nDigite a palavra %d: ", i+1);
                     scanf("%s", palavra);
                     flush_in();
@@ -204,26 +217,25 @@ int main(void){
                         Red();
                         printf("Palavra nao encontrada!\n");
                         White();
-                        continue;
                     }
                     else{
                         Green();
                         printf("Palavra encontrada!\n");
                         White();
+                        Retorna_Peso(&lista_aux_pat, Numero_Arquivos, contador, mat); //Retorna o peso de cada arquivo
                     }
-                    Retorna_Peso(lista_aux_hash,  Numero_Arquivos, contador, matriz); //Calcula o peso de cada palavra em cada arquivo e coloca na matriz
                     contador+=1;
                 }
                 //calcular a relevancia de cada arquivo
                 printf("\nMatriz de pesos:\n");
                     for (int i = 0; i < palavras; i++){
-                        for (int j = 0; j < Numero_Arquivos-1; j++){
-                            printf("%.2f ", matriz[i][j]);
+                        for (int j = 0; j < Numero_Arquivos; j++){
+                            printf("%.2f ", mat[i][j]);
                         }
                     printf("\n");
                     }   
             }
-            else{
+            if (opcao != 1 && opcao != 2){
                     Red();
                     printf("Opcao invalida\n");
                     White();
@@ -235,7 +247,8 @@ int main(void){
             printf("Digite uma nova opcao ou 0 pra voltar ao menu: ");
             scanf("%d", &opcao);
             flush_in();
-            free(matriz);
+            free(mat);
+            free(buf);
             continue;
         }
         else{
