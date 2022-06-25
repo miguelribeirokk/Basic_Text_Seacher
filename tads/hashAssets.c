@@ -43,7 +43,6 @@ hashTable *iniciaTabela(int tamanho) {
 }
 
 void inserirNaTabela(hashTable *hashtable, const char *key, int idDoArquivo){
-    printf("palavra %s\n", key);
     unsigned int slot = hash(key,hashtable->tamanho);
     // utiliza a funçao hash para entrar com os valores em um indice
     tipoItem *entry = hashtable->entries[slot];
@@ -130,7 +129,7 @@ void removerDaTabela(hashTable *hashtable, const char *key){
 }
 
 void printaTabela(hashTable *tabela){
-    for(int i = 0; i < tabela->tamanho; ++i) {
+    for(int i = 0; i < tabela->tamanho; i++) {
         tipoItem *entry = tabela->entries[i];
         if(entry == NULL) {
             continue;
@@ -147,37 +146,35 @@ void printaTabela(hashTable *tabela){
     }
 }
 
- /*int calcPalavras(hashTable *tabela,int idArq){
-    int contPalavras = 0;
-     tipoItem *aux;
-     for(int i = 0; i < tabela->tamanho; i++){
-        tipoItem *entry = tabela->entries[i];
-         if(entry == NULL){
-            continue;
-         }
-         else if(entry-> == idArq){
-             contPalavras++;
-         }
-         aux = entry->next;
-         while(aux != NULL){
-           if(strcmp(entry->key,aux->key) == 0){
-                ;
-            }
-           if(aux->idArq == idArq){
-                 contPalavras++;
-             }
-             aux = aux->next;
+int calcPalavras(hashTable *tabela,int idDoArq){
+    int cont = 0;
+    for(int i = 0; i < tabela->tamanho; ++i) {
+    tipoItem *entry = tabela->entries[i];
+    if(entry == NULL) {
+        continue;
+    }
+    for(;;) {
+        if(entry->lista->nome_arquivo == idDoArq){
+            cont++;
         }
-        
-        
-//     }
-//     free(aux);
-//     return contPalavras;
-//     // return contPalavras;
-// }*/
-
-
-/*int main(){
+        else{
+            Lista_Encadeada *aux = entry->lista;
+            while(aux != NULL){
+                if(aux->nome_arquivo == idDoArq){
+                    cont++;
+                }
+                aux = aux->prox;
+            }
+        }
+        if (entry->next == NULL) {
+            break;
+        }
+        entry = entry->next;
+    }
+    }
+    return cont;
+}
+int main(){
     hashTable *ht = iniciaTabela(15); //add tamanho
     Lista_Encadeada **lista;
     inserirNaTabela(ht, "allan", 1);
@@ -283,17 +280,6 @@ void printaTabela(hashTable *tabela){
     inserirNaTabela(ht, "aaaaaaaaaa", 3);
     inserirNaTabela(ht, "aaaaaaaaaa", 3);
     inserirNaTabela(ht, "aaaaaaaaaa", 3);
-    printaTabela(ht);
-    //procurar uma palavra na tabela
-    printf("\nProcurando uma palavra na tabela\n");
-    lista = procurarNaTabela(ht, "aaaaaaaaaa");
-    if (lista != NULL) {
-        printf("\nPalavra encontrada\n");
-        LE_Printa_Lista(lista);
-        
-    } else {
-        printf("\nPalavra não encontrada\n");
-    }
-     printf("%d",calcPalavras(ht,1));
-    // imprimeOrdenado(ht);*/
-   // return 0;}
+    // printaTabela(ht);
+    printf("%d",calcPalavras(ht,1));
+    return 0;}

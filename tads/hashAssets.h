@@ -23,4 +23,5 @@ void inserirNaTabela(hashTable *hashtable, const char *key, int idDoArquivo);
 Lista_Encadeada **procurarNaTabela(hashTable *hashtable, const char *key);
 void removerDaTabela(hashTable *hashtable, const char *key);
 void printaTabela(hashTable *tabela);
-// int calcPalavras(hashTable *tabela,int idArq);
+int calcPalavras(hashTable *tabela,int idDoArq);
+
