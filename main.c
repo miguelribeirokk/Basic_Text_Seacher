@@ -18,7 +18,7 @@ int main(void){
     Inicializa_Patricia(&no); //Inicializa a arvore
     Inicializa_Lista(&lista_pat); //Inicializa a lista de palavras na arvore
     Inicializa_Lista(&lista_aux_pat);
-    int fim, palavras, contador = 0, Numero_Arquivos = 0, opcao = 0, numero = 0;
+    int palavras, contador = 0, Numero_Arquivos = 0, opcao = 0, numero = 0;
     char *nome_arquivo = (char *)malloc(sizeof(char));
     char *palavra = (char*)malloc(sizeof(char));
     char nome[100];
@@ -103,8 +103,8 @@ int main(void){
                 flush_in();
                 continue;
             }
-            Printar_Palavra(&no); //Imprime as palavras da arvore em ordem alfabetica
-            //printaPalavras_Hash(ht);
+            //Printar_Palavra(&no); //Imprime as palavras da arvore em ordem alfabetica
+            printaPalavras_Hash(ht);
             Pink();
             printf("Pressione enter para continuar");
             getchar();
@@ -127,8 +127,8 @@ int main(void){
                 flush_in();
                 continue;
             }
-            Printar_Ocorrencias(&no); //Imprime o indice invertido da arvore Patricia
-            //printaTabela(ht);
+            //Printar_Ocorrencias(&no); //Imprime o indice invertido da arvore Patricia
+            printaTabela(ht);
             Pink();
             printf("Pressione enter para continuar\n");
             getchar();
@@ -190,24 +190,17 @@ int main(void){
                     }
                     contador+=1; 
                 }
-                    printf("\nMatriz de pesos:\n");
-                    for (int p = 0; p < palavras; p++){
-                        for (int h = 0; h < Numero_Arquivos;h++){
-                            printf("%.2f ", mat[p][h]);
-                        }
-                    printf("\n");
+                printf("\nMatriz de pesos:\n");
+                for (int p = 0; p < palavras; p++){
+                    for (int h = 0; h < Numero_Arquivos;h++){
+                        printf("%.2f ", mat[p][h]);
                     }
+                printf("\n");
+                }
             }
             if(opcao == 2){
                 contador = 0;
                 for (int i = 0; i < palavras; i++){
-                    printf("\nMatriz de pesos:\n");
-                    for (int p = 0; p < palavras; p++){
-                        for (int h = 0; h < Numero_Arquivos-1;h++){
-                            printf("%.2f ", mat[p][h]);
-                        }
-                    printf("\n");
-                    }
                     printf("\nDigite a palavra %d: ", i+1);
                     scanf("%s", palavra);
                     flush_in();
@@ -222,15 +215,15 @@ int main(void){
                         Green();
                         printf("Palavra encontrada!\n");
                         White();
-                        Retorna_Peso(&lista_aux_pat, Numero_Arquivos, contador, mat); //Retorna o peso de cada arquivo
+                        Retorna_Peso(lista_aux_hash, Numero_Arquivos, contador, mat); //Retorna o peso de cada arquivo
                     }
                     contador+=1;
                 }
                 //calcular a relevancia de cada arquivo
                 printf("\nMatriz de pesos:\n");
-                    for (int i = 0; i < palavras; i++){
-                        for (int j = 0; j < Numero_Arquivos; j++){
-                            printf("%.2f ", mat[i][j]);
+                    for (int p = 0; p < palavras; p++){
+                        for (int h = 0; h < Numero_Arquivos; h++){
+                            printf("%.2f ", mat[p][h]);
                         }
                     printf("\n");
                     }   

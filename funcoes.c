@@ -9,17 +9,6 @@
 #include "funcoes.h"
 #include "cores/cores.h"
 
-
-FILE* Ler_Arquivo(char arquivo[100]){
-    FILE *arquivo1 = fopen(arquivo, "r");
-    if(arquivo1 == NULL){
-        printf("Erro ao abrir o arquivo!\n");
-        return NULL;
-    }
-    return arquivo1;
-    }
-
-
 char *Transformar_Palavra(char palavra[100]){
     long unsigned int i;
     for (i = 0; i < strlen(palavra); i++){
@@ -29,9 +18,6 @@ char *Transformar_Palavra(char palavra[100]){
     }
     return palavra;
 }
-
-
-
 
 void Abrir_Arquivo(char nome[100], No_Patricia **no, hashTable *tabela,  int Numero_Arquivos){
     char pasta[100] = "arquivos/"; //Caminho da pasta
@@ -69,7 +55,7 @@ void flush_in() { //Limpa o buffer de entrada
 
 void Retorna_Peso(Lista_Encadeada **lista, int Numero_Arquivos, int contador, float **peso){
     //Calcula os pesos e os insere na matriz
-    int ocorrencias = 0, numero_docs = 0, numero = 0;
+    int ocorrencias = 0, numero_docs = 0;
     Lista_Encadeada *lista2 = *lista;
     Lista_Encadeada *lista3 = *lista;
     Numero_Arquivos += 1;
@@ -95,7 +81,6 @@ void Retorna_Peso(Lista_Encadeada **lista, int Numero_Arquivos, int contador, fl
         else{
         }
     }
-    
     free(lista2);
     return;
 }
