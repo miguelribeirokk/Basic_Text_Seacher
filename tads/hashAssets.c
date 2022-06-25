@@ -165,6 +165,7 @@ int calcPalavras(hashTable *tabela,int idDoArq){
                 }
                 aux = aux->prox;
             }
+            free(aux);
         }
         if (entry->next == NULL){
             break;
@@ -172,5 +173,6 @@ int calcPalavras(hashTable *tabela,int idDoArq){
         entry = entry->next;
         }
     }
+    
     return cont;
 }
