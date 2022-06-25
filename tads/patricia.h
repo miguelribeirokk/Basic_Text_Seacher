@@ -27,7 +27,7 @@ typedef struct No_Patricia{
   }No;
 } No_Patricia;
 
-int Inicializa(No_Patricia **no);
+int Inicializa_Patricia(No_Patricia **no);
 int Externo(No_Patricia **no);
 int Confere(No_Patricia **no, char *palavra);
 int Cria_No_Externo(No_Patricia **no, char *palavra, int arquivo);
