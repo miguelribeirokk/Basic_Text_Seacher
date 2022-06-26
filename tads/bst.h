@@ -1,3 +1,10 @@
+//Implementado por:
+//Miguel Antonio Ribeiro e Silva - 4680
+//Alan Gabriel Martins Silva - 4663
+//Vinicius Alves Gontijo - 4708
+//Gabriel Ryan -
+
+
 #ifndef BST_H
 #define BST_H
 

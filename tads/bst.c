@@ -1,14 +1,23 @@
+//Implementado por:
+//Miguel Antonio Ribeiro e Silva - 4680
+//Alan Gabriel Martins Silva - 4663
+//Vinicius Alves Gontijo - 4708
+//Gabriel Ryan -
+
+
+
 #include "bst.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 
-
+//Inicia a arvore BST
 void IniciaArvore_BST(apontador *no){
     *no = NULL;
     
 }
 
+//Insere um novo no na arvore BST
 void Insere_BST(apontador *no, float valor, int idDoc){
     
     if(*no == NULL){
@@ -31,6 +40,8 @@ void Insere_BST(apontador *no, float valor, int idDoc){
     }
 
 }
+
+//Imprime a arvore BST em ordem decrescente
 void Ordem_BST(apontador no){
     if(no != NULL){
         Ordem_BST(no->dir);
@@ -39,6 +50,7 @@ void Ordem_BST(apontador no){
     }
 }
 
+//Libera a arvore BST
 void Free_Arvore_BST(apontador *no){
     if(*no != NULL){
         Free_Arvore_BST(&(*no)->esq);

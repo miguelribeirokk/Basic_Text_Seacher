@@ -12,7 +12,9 @@
 
 
 
-void Abrir_Arquivo(char nome[100], No_Patricia **no,hashTable *tabela,int Numero_Arquivos);
+
+void Abrir_Arquivo_PAT(char nome[100], No_Patricia **no,  int Numero_Arquivos);
+void Abrir_Arquivo_HASH(char nome[100],hashTable *tabela,int Numero_Arquivos);
 char *Transformar_Palavra(char palavra[100]);
 void flush_in();
 void Retorna_Peso(Lista_Encadeada **lista,  int Numero_Arquivos, int contador, float **peso);

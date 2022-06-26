@@ -1,3 +1,8 @@
+//Implementado por:
+//Miguel Antonio Ribeiro e Silva - 4680
+//Alan Gabriel Martins Silva - 4663
+//Vinicius Alves Gontijo - 4708
+//Gabriel Ryan -
 
 #include "cores.h"
 
