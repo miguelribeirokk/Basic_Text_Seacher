@@ -16,6 +16,7 @@ int LE_Criar_No(Lista_Encadeada **lista, int arquivo);
 int LE_Incrementa_Ocorrencias(Lista_Encadeada **lista);
 int LE_Insere_No(Lista_Encadeada **lista, int arquivo);
 int LE_Printa_Lista(Lista_Encadeada **lista);
+int LE_Busca_No(Lista_Encadeada **no, int arquivo);
 int Free_Lista(Lista_Encadeada **lista);
 
 #endif

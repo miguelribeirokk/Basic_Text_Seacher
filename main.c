@@ -5,6 +5,7 @@
 //Gabriel Ryan -
 #include "tads/hashAssets.h"
 #include "funcoes.h"
+#include "tads/bst.h"
 #define TAM 17
 
 
@@ -17,6 +18,7 @@ int main(void){
     ht = iniciaTabela(TAM); 
     Inicializa_Patricia(&no);
     int palavras, contador = 0, Numero_Arquivos = 0, opcao = 0, numero = 0;
+    float soma;
     char *nome_arquivo = (char *)malloc(sizeof(char));
     char *palavra = (char*)malloc(sizeof(char));
     char *nome = (char *)malloc(sizeof(char));
@@ -143,16 +145,22 @@ int main(void){
             printf("2 - Hash\n");
             scanf("%d", &opcao);
             flush_in();
+
+            //Alocando espaços para o calculo da relevancia
+            //*****************************************************************//
             float ** mat = malloc((sizeof (float *) * palavras));
             float *buf = malloc((sizeof (float) * palavras * Numero_Arquivos));
-            for (int i = 0; i < palavras; i++){
-                mat[i] = &buf[i*Numero_Arquivos];
-            }
+            int *quantidade = malloc((sizeof (int) * Numero_Arquivos));
+            float *relevancia = malloc((sizeof (float) * Numero_Arquivos));
+            float *ordenado = malloc((sizeof (int) * Numero_Arquivos));
+            for (int i = 0; i < palavras; i++) mat[i] = &buf[i*Numero_Arquivos];
             for (int i = 0; i < palavras; i++){
                 for (int j = 0; j < Numero_Arquivos; j++){
                     mat[i][j] = 0;
                 }
             }
+            //******************************************************************//
+            
             if(opcao == 1){
                 contador = 0;
                 for (int i = 0; i < palavras; i++) {
@@ -166,16 +174,10 @@ int main(void){
                     }
                     else{
                         Green(); printf("Palavra encontrada!\n"); White();
-                        Retorna_Peso(&lista_aux_pat, Numero_Arquivos, contador, mat); //Retorna o peso de cada arquivo
+                        //Retorna o peso de cada arquivo
+                        Retorna_Peso(&lista_aux_pat, Numero_Arquivos, contador, mat);
                     }
                     contador+=1; 
-                }
-                printf("\nMatriz de pesos:\n");
-                for (int p = 0; p < palavras; p++){
-                    for (int h = 0; h < Numero_Arquivos;h++){
-                        printf("%.2f ", mat[p][h]);
-                    }
-                printf("\n");
                 }
             }
             if(opcao == 2){
@@ -187,55 +189,41 @@ int main(void){
                     lista_hash = procurarNaTabela(ht, palavra); //Busca a palavra na Hash
                     lista_aux_hash = lista_hash;
                     if (lista_hash== NULL){
-                        Red();
-                        printf("Palavra nao encontrada!\n");
-                        White();
+                        Red(); printf("Palavra nao encontrada!\n"); White();
                     }
                     else{
-                        Green();
-                        printf("Palavra encontrada!\n");
-                        White();
-                        Retorna_Peso(lista_aux_hash, Numero_Arquivos, contador, mat); //Retorna o peso de cada arquivo
+                        Green(); printf("Palavra encontrada!\n"); White();
+                         //Retorna o peso de cada arquivo
+                        Retorna_Peso(lista_aux_hash, Numero_Arquivos, contador, mat); 
                     }
                     contador+=1;
                 }
-                //pega a quantidade de palavras deiferenrtes e bota num vetor
-                int *quantidade = malloc((sizeof (int) * Numero_Arquivos));
-                for (int i = 0; i < Numero_Arquivos; i++){
-                    quantidade[i] = calcPalavras(ht, i+1);
-                }
-                for (int i = 0; i < Numero_Arquivos; i++){
-                    printf("%d ", quantidade[i]);
-                }
-                //relevancia
-                /*float *relevancia = malloc((sizeof (float) * Numero_Arquivos));
-                //somatorio
-                int somatorio;
-                for (int i = 0; i < Numero_Arquivos; i++){
-                    somatorio = 0;
-                    for (int k = 0; k < palavras; k++){
-                        somatorio += mat[k][i];
-                    }
-                    relevancia[i] = 1/quantidade[i]*(somatorio);
-                }*/
-                //ordenar o vetor de relevancia
-                printf("\nMatriz de pesos:\n");
-                    for (int p = 0; p < palavras; p++){
-                        for (int h = 0; h < Numero_Arquivos; h++){
-                            printf("%.2f ", mat[p][h]);
-                        }
-                    printf("\n");
-                    }   
             }
             if (opcao != 1 && opcao != 2){
                     Red(); printf("Opcao invalida\n"); White();
             }
-            Pink(); printf("\nPressione enter para continuar"); 
-            getchar(); 
+            quantidade = Quantidade_Palavras_Hash(quantidade, Numero_Arquivos, ht);
+            printf ("\nQuantidade de palavras por arquivo:\n");
+            for (int i = 0; i < Numero_Arquivos; i++){
+                printf("Arquivo %d: %d\n", i+1, quantidade[i]);
+            }
+            
+            /*quantidade = Quantidade_Palavras_PAT(quantidade, Numero_Arquivos, &no);
+            printf ("\nQuantidade de palavras por arquivo:\n");
+            for (int i = 0; i < Numero_Arquivos; i++){
+                printf("Arquivo %d: %d\n", i+1, quantidade[i]);
+            }*/
+
+            relevancia = Relevancia(relevancia, Numero_Arquivos, palavras, mat, quantidade);
+            Pink(); printf("\nArquivos ordenados pela relevancia:\n"); White();
+            printf("Pressione Enter para ver a lista\n"); getchar();
+            Printar_Ordenado(relevancia, Numero_Arquivos); 
+            Pink(); printf("\nPressione enter para continuar"); getchar(); 
             White(); printf("Digite uma nova opcao ou 0 pra voltar ao menu: ");
             scanf("%d", &opcao);
             flush_in();
             free(mat); free(buf);
+            free(quantidade); free(relevancia); free(ordenado); 
             continue;
         }
         else{

@@ -117,7 +117,6 @@ void printaTabela(hashTable *tabela){
             }
             entry = entry->next;
         }
-        //printf("\n");
     }
 }
 

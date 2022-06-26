@@ -7,6 +7,7 @@
 
 #include "tads/hashAssets.h"
 #include "funcoes.h"
+#include "tads/bst.h"
 #include "cores/cores.h"
 
 char *Transformar_Palavra(char palavra[100]){
@@ -84,7 +85,43 @@ void Retorna_Peso(Lista_Encadeada **lista, int Numero_Arquivos, int contador, fl
     free(lista2);
     return;
 }
-        
+int *Quantidade_Palavras_PAT(int *quantidade, int Numero_Arquivos, No_Patricia **no){
+    printf("AAAAAAAAAA");
+    for(int i = 0; i < Numero_Arquivos; i++){
+        quantidade[i] = Palavras_Diferentes_PAT(no, i+1);
+    }
+    return quantidade;
+}
+
+int *Quantidade_Palavras_Hash(int *quantidade, int Numero_Arquivos, hashTable *tabela){
+    for(int i = 0; i < Numero_Arquivos; i++){
+        quantidade[i] = calcPalavras(tabela, i+1);
+    }
+    return quantidade;
+}
+
+float *Relevancia(float *relevancia, int Numero_Arquivos, int palavras, float **peso, int *quantidade){
+    float soma;
+    for (int i = 0; i < Numero_Arquivos; i++){
+        soma = 0;
+        for (int k = 0; k < palavras; k++){
+            soma += peso[k][i];
+        }
+        relevancia[i] = soma/quantidade[i];
+    }
+    return relevancia;
+}
+
+void Printar_Ordenado(float *relevancia, int Numero_Arquivos){
+    apontador no;
+    IniciaArvore_BST(&no);
+    for (int i = 0; i < Numero_Arquivos; i++){
+        Insere_BST(&no, relevancia[i], i+1);
+    }
+    Ordem_BST(no);
+    Free_Arvore_BST(&no);
+}
+    
         
     
 

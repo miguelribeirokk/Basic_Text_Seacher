@@ -16,6 +16,10 @@ void Abrir_Arquivo(char nome[100], No_Patricia **no,hashTable *tabela,int Numero
 char *Transformar_Palavra(char palavra[100]);
 void flush_in();
 void Retorna_Peso(Lista_Encadeada **lista,  int Numero_Arquivos, int contador, float **peso);
+int *Quantidade_Palavras_Hash(int *quantidade, int Numero_Arquivos, hashTable *tabela);
+int *Quantidade_Palavras_PAT(int *quantidade, int Numero_Arquivos, No_Patricia **no);
+float *Relevancia(float *relevancia, int Numero_Arquivos, int palavras, float **peso, int *quantidade);
+void Printar_Ordenado(float *relevancia, int Numero_Arquivos);
 
 
 

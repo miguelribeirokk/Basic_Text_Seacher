@@ -58,3 +58,12 @@ int Free_Lista(Lista_Encadeada **no){ //Esvazia a lista
     }
     return 0;
 }
+int LE_Busca_No(Lista_Encadeada **no, int arquivo) { //Busca nó na lista
+    if ((*no) == NULL) { //Verifica se a lista está vazia
+        return 0;
+    }
+    if (arquivo == (**no).nome_arquivo) { //Verifica se o arquivo é igual ao nó
+        return 1;
+    }
+    return LE_Busca_No(&((**no).prox), arquivo); //Busca no no final da lista
+}

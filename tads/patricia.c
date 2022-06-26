@@ -214,3 +214,21 @@ int Free_Patricia(No_Patricia **no){
     return 0;
   }
 }
+
+//numero de palavras diferentes em cada arquivo
+int Palavras_Diferentes_PAT(No_Patricia **no, int idArq){
+  int contador = 0;
+  //calcular a quantidade de palavras diferentes de cada arquivo
+  if((**no).TipoNo == externo){
+    if(!LE_Busca_No(&((**no).No.externo.lista), idArq)){
+      contador++;
+    }
+    
+  }
+  else{
+    contador += Palavras_Diferentes_PAT(&((**no).No.interno.esq), idArq);
+    contador += Palavras_Diferentes_PAT(&((**no).No.interno.dir), idArq);
+    return contador;
+  }
+}
+

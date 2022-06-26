@@ -41,6 +41,8 @@ int Insere_Palavra(No_Patricia **no, char *palavra, int filename);
 int Printar_Palavra(No_Patricia **no);
 int Printar_Ocorrencias(No_Patricia **no);
 Lista_Encadeada *Buscar_Palavra(No_Patricia **no, char *palavra);
+int Palavras_Diferentes_PAT(No_Patricia **no, int idArq);
 int Free_Patricia(No_Patricia **no);
+
 
 #endif 
