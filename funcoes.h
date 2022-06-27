@@ -13,9 +13,9 @@
 
 
 
-void Abrir_Arquivo_PAT(char nome[100], No_Patricia **no,  int Numero_Arquivos);
-void Abrir_Arquivo_HASH(char nome[100],hashTable *tabela,int Numero_Arquivos);
-char *Transformar_Palavra(char palavra[100]);
+void Abrir_Arquivo_PAT(char nome[], No_Patricia **no,  int Numero_Arquivos);
+void Abrir_Arquivo_HASH(char nome[],hashTable *tabela,int Numero_Arquivos);
+char *Transformar_Palavra(char palavra[]);
 void flush_in();
 void Retorna_Peso(Lista_Encadeada **lista,  int Numero_Arquivos, int contador, float **peso);
 int *Quantidade_Palavras_Hash(int *quantidade, int Numero_Arquivos, hashTable *tabela);

@@ -50,14 +50,59 @@ hashTable *iniciaTabela(int tamanho) {
     return hashtable;
 }
 
+int comparaChar(char *A, char *B) {
+    int count = 0;
+    while (A[count] == B[count] && A[count] != '\n' && B[count] != '\n') count++;
+    return count;
+}
+
+void Particao(long int Esq, long int Dir,long int *i, long int *j, tipoItem *A[]){
+    tipoItem *pivo, *aux;
+    *i = Esq; *j = Dir;
+    int k;
+
+    pivo = A[(*i + *j)/2]; /* obtem o pivo x */
+    do {
+        k = comparaChar((*pivo).key, (*A[*i]).key);
+        while ((*pivo).key[k] > (*A[*i]).key[k]) {
+            (*i)++; 
+            k = comparaChar((*pivo).key, (*A[*i]).key);
+        } 
+        k = comparaChar((*pivo).key, (*A[*j]).key);
+        while ((*pivo).key[k] < (*A[*j]).key[k]) {
+            (*j)--;
+            k = comparaChar((*pivo).key, (*A[*j]).key);
+        }
+        
+        if (*i <= *j) { 
+            aux = A[*i]; 
+            A[*i] = A[*j]; 
+            A[*j] = aux;
+            (*i)++; (*j)--;
+        }
+    } while (*i <= *j);
+}
+
+
+void Ordena(long int Esq, long int Dir, tipoItem *A[]) {
+    long int i, j;
+    Particao(Esq, Dir, &i, &j, A);
+    if (Esq < j) Ordena(Esq, j, A);
+    if (i < Dir) Ordena(i, Dir, A);
+}
+
+void QuickSort(tipoItem *A[], long int n) {
+    Ordena(0, n-1, A);
+}
+
 void inserirNaTabela(hashTable *hashtable, const char *key, int idDoArquivo){
+    hashtable->countItens++;
     unsigned int slot = hash(key,hashtable->tamanho);
     //Utiliza a funçao hash para entrar com os valores em um indice
     tipoItem *entry = hashtable->entries[slot];
     //Se o indice encontrado for nulo, insere direto
     if (entry == NULL) {
         hashtable->entries[slot] = criaItem(key, idDoArquivo);
-        hashtable->countItens++;
         return; // Retorna apos inserir
     }
     tipoItem *prev;
@@ -65,8 +110,8 @@ void inserirNaTabela(hashTable *hashtable, const char *key, int idDoArquivo){
     while(entry != NULL){
         if(strcmp(entry->key,key)==0){    
             //Se achou, insere na lista de indices invertidos
+                hashtable->countItens--;
                 LE_Insere_No(&(entry->lista),idDoArquivo);
-                hashtable->countItens++;
                 return;
         }
         prev = entry;
@@ -113,37 +158,52 @@ void Free_Table(hashTable *hashtable){
 
 //Imprime a tabela
 void printaTabela(hashTable *tabela){
+    int count = 0;
+    tipoItem **arrayAux;
+    arrayAux = (tipoItem**) malloc(sizeof(tipoItem*) * tabela->countItens);
     for(int i = 0; i < tabela->tamanho; i++) {
         tipoItem *entry = tabela->entries[i];
         if(entry == NULL){
             continue;
         }
         for(;;) {
-            printf("%s", entry->key);
-            LE_Printa_Lista(&(entry->lista));
-            printf("\n");
+            arrayAux[count] = entry;
+            count++;
             if (entry->next == NULL){
                 break;
             }
             entry = entry->next;
         }
     }
+    QuickSort(arrayAux, tabela->countItens);
+    for(int i = 0; i < tabela->countItens; i++) {
+        printf("%s - ", arrayAux[i]->key);
+        LE_Printa_Lista(&(arrayAux[i]->lista));
+        printf("\n");
+    }
 }
 //Imprime as palavras da tabela
 void printaPalavras_Hash(hashTable *tabela){
+    int count = 0;
+    tipoItem **arrayAux;
+    arrayAux = (tipoItem**) malloc(sizeof(tipoItem*) * tabela->countItens);
     for(int i = 0; i < tabela->tamanho; i++) {
         tipoItem *entry = tabela->entries[i];
         if(entry == NULL){
             continue;
         }
         for(;;) {
-            printf("%s\n", entry->key);
+            arrayAux[count] = entry;
+            count++;
             if (entry->next == NULL){
                 break;
             }
             entry = entry->next;
         }
-        printf("\n");
+    }
+    QuickSort(arrayAux, tabela->countItens);
+    for(int i = 0; i < tabela->countItens; i++) {
+        printf("%s\n", arrayAux[i]->key);
     }
 }
 
@@ -151,29 +211,29 @@ void printaPalavras_Hash(hashTable *tabela){
 //Usando a lista de indices invertidos de cada palavra
 int calcPalavras(hashTable *tabela,int idDoArq){
     int cont = 0;
-    for(int i = 0; i < tabela->tamanho; ++i) {
-    tipoItem *entry = tabela->entries[i];
-    if(entry == NULL){
-        continue;
-    }
-    for(;;){
-        if(entry->lista->nome_arquivo == idDoArq){
-            cont++;
+        for(int i = 0; i < tabela->tamanho; ++i) {
+        tipoItem *entry = tabela->entries[i];
+        if(entry == NULL){
+            continue;
         }
-        else{
-            Lista_Encadeada *aux = entry->lista;
-            while(aux != NULL){
-                if(aux->nome_arquivo == idDoArq){
-                    cont++;
-                }
-                aux = aux->prox;
+        for(;;){
+            if(entry->lista->nome_arquivo == idDoArq){
+                cont++;
             }
-            free(aux);
-        }
-        if (entry->next == NULL){
-            break;
-        }
-        entry = entry->next;
+            else{
+                Lista_Encadeada *aux = entry->lista;
+                while(aux != NULL){
+                    if(aux->nome_arquivo == idDoArq){
+                        cont++;
+                    }
+                    aux = aux->prox;
+                }
+                free(aux);
+            }
+            if (entry->next == NULL){
+                break;
+            }
+            entry = entry->next;
         }
     }
     
