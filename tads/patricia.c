@@ -229,6 +229,5 @@ int Palavras_Diferentes_PAT(No_Patricia **no, int idArq){
     contador += Palavras_Diferentes_PAT(&((**no).No.interno.dir), idArq);
     return contador;
   }
-  return contador;
 }
 
