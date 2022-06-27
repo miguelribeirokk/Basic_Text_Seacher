@@ -261,6 +261,13 @@ int main(void){
             }
             
             if(opcao == 1){
+                if (patricia == 0){
+                    Red(); printf("\nInicialize a Patricia primeiro!\n\n");
+                    Pink(); printf("Digite 1 para inicializa-la ou 0 pra voltar ao menu: ");
+                    White(); scanf("%d", &opcao);
+                    flush_in();
+                    continue;
+                }
                 contador = 0;
                 for (int i = 0; i < palavras; i++) {
                     printf("\nDigite a palavra %d: ", i+1);
@@ -283,6 +290,13 @@ int main(void){
             }
 
             if(opcao == 2){
+                if (hash == 0){
+                    Red(); printf("\nInicialize a Hash primeiro!\n\n");
+                    Pink(); printf("Digite 2 para inicializa-la ou 0 pra voltar ao menu: ");
+                    White(); scanf("%d", &opcao);
+                    flush_in();
+                    continue;
+                }
                 contador = 0;
                 for (int i = 0; i < palavras; i++){
                     printf("\nDigite a palavra %d: ", i+1);
