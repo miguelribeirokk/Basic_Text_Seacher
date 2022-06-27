@@ -19,5 +19,6 @@ Para fazer seus proprios testes, basta adicionar seu arquivo.txt na pasta do pro
 o arquivo deverá conter o nome de todos os arquivos que serão lidos,
 e todos deverão ser adicionados na pasta arquivos.
 Caso seus arquivos possuem caracteres especiais, use o script de conversão remove.py,
-que está na pasta remove. Este script remove todos os caracteres especiais do arquivo.
+que está na pasta remove. Esse script remove todos os caracteres especiais do arquivo.
+Antes de executar o ./main defina o tamanho da tabela hash, especificado na variável TAM 11ª linha da main.c
 Leia o README.txt da pasta remove para mais informações.

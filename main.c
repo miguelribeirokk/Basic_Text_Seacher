@@ -2,12 +2,13 @@
 //Miguel Antonio Ribeiro e Silva - 4680
 //Alan Gabriel Martins Silva - 4663
 //Vinicius Alves Gontijo - 4708
-//Gabriel Ryan -
+//Gabriel Ryan  Dos Santos Oliveira- 4688
 
 #include "tads/hashAssets.h"
 #include "funcoes.h"
 #include "tads/bst.h"
-#define TAM 17
+#include <time.h>
+#define TAM 100
 
 
 
@@ -86,7 +87,6 @@ int main(void){
         }
 
         //********************************************************************************//
-
         if (opcao == 2){
             FILE *arquivo = NULL;
             numero = 0;
@@ -271,7 +271,7 @@ int main(void){
                 contador = 0;
                 for (int i = 0; i < palavras; i++) {
                     printf("\nDigite a palavra %d: ", i+1);
-                    scanf("%s", palavra); 
+                    scanf("%s", palavra);
                     flush_in();
                     lista_pat = Buscar_Palavra(&no, palavra); 
                     lista_aux_pat = lista_pat;
@@ -283,10 +283,10 @@ int main(void){
                         //Retorna o peso de cada arquivo e calcula a quantidade de palavras diferentes
                         //Pesos inseridos na matriz e palavras dif. caluladas usando Patricia
                         Retorna_Peso(&lista_aux_pat, Numero_Arquivos, contador, mat);
-                        quantidade = Quantidade_Palavras_PAT(quantidade, Numero_Arquivos, &no);
                     }
                     contador+=1; 
                 }
+                quantidade = Quantidade_Palavras_PAT(quantidade, Numero_Arquivos, &no);
             }
 
             if(opcao == 2){
@@ -312,14 +312,15 @@ int main(void){
                          //Retorna o peso de cada arquivo e calcula a quantidade de palavras diferentes
                         //Pesos inseridos na matriz e palavras dif. calculadas usando a Hash
                         Retorna_Peso(lista_aux_hash, Numero_Arquivos, contador, mat);
-                        quantidade = Quantidade_Palavras_Hash(quantidade, Numero_Arquivos, ht);             
                     }
                     contador+=1;
                 }
+                 quantidade = Quantidade_Palavras_Hash(quantidade, Numero_Arquivos, ht);
             }
             if (opcao != 1 && opcao != 2){
                     Red(); printf("Opcao invalida\n"); White();
             }
+
             //Calcula a relevancia de cada arquivo
             relevancia = Relevancia(relevancia, Numero_Arquivos, palavras, mat, quantidade);
             Pink(); printf("\nArquivos ordenados pela relevancia:\n"); White();

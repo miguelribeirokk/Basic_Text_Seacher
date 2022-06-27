@@ -2,7 +2,7 @@
 //Miguel Antonio Ribeiro e Silva - 4680
 //Alan Gabriel Martins Silva - 4663
 //Vinicius Alves Gontijo - 4708
-//Gabriel Ryan -
+//Gabriel Ryan Dos Santos Oliveira- 4688
 
 
 #include "hashAssets.h"
